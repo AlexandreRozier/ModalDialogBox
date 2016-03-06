@@ -188,7 +188,7 @@ alert = function () {
 
     function showDialog() {
         document.write(self.defaultAppearance);
-        
+
     }
 
     /*****************

@@ -1,3 +1,12 @@
-1. write the tags to the html page
-2. initiates the tags
-3. allows to customize
+This library provides a modal dialog box, overriding the well-known Window.alert() function.
+
+To begin with, you just have to include this lib via a <script> tag :
+
+<script>
+    // Used to wait for the DOM to load
+    (function() {
+        alert();
+    })();
+
+
+</script>
