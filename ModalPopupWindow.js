@@ -26,7 +26,9 @@ alert = function () {
         '</div>';
 
     // Used to write the DialogBox html content, so that we can retrieve it
-    document.write(this.defaultAppearance);
+    var modalWindow = document.createElement("div");
+    modalWindow.innerHTML =this.defaultAppearance;
+    document.body.insertBefore(modalWindow,document.body.firstChild);
 
     // Retrieves the main components of the ModalDialog
     this.overlay = document.getElementById('window-overlay');
@@ -114,10 +116,10 @@ alert = function () {
 
         // Adds nice hover effect
         btn.onmouseover = function() {
-            self.style.backgroundColor = defaultHoveredColor
+            btn.style.backgroundColor = defaultHoveredColor
         };
         btn.onmouseout = function() {
-            self.style.backgroundColor = defaultColor
+            btn.style.backgroundColor = defaultColor
         };
 
         // Sets the border
@@ -126,7 +128,6 @@ alert = function () {
         // Finally adds the button to the html page
         self.footer.appendChild(btn);
 
-        console.log(self);
     }
 
     /**
@@ -181,23 +182,17 @@ alert = function () {
      * Dismisses the ModalDialogBox
      */
     function dismissDialog() {
-        var self = document.getElementById('window-overlay');
-        self.parentNode.removeChild(self);
-        return document.getElementById('window-overlay');
     }
 
-    function showDialog() {
-        document.write(self.defaultAppearance);
 
-    }
 
     /*****************
      The script itself
      *****************/
     setDefaultSize();
     prettify();
-    addButton("positiveBtn","OK");
-    addButton("negativeBtn","Cancel", dismissDialog());
+    addButton("positiveBtn","OK",dismissDialog());
+    addButton("negativeBtn","Cancel",dismissDialog());
 
 
 };
