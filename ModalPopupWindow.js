@@ -36,11 +36,10 @@ alert = function () {
     this.actionBar = document.getElementById('window-actionBar');
     this.content = document.getElementById('window-content');
     this.footer = document.getElementById('window-footer');
-    this.container = document.getElementById('window-container');
 
 
     /******************
-    Function definition
+     Functions definition
      ******************/
 
 
@@ -93,7 +92,9 @@ alert = function () {
         // Creates the button with the given text and listener
         var btn = document.createElement("A");
         var t = document.createTextNode(text);
-        btn.addEventListener('click', triggeredFunction);
+        btn.addEventListener('click', function(){
+            dismissDialog();
+        });
         btn.appendChild(t);
 
         // Adds the id
@@ -149,6 +150,7 @@ alert = function () {
         self.container.style.borderBottomRightRadius =  6 + "px";
         self.container.style.borderTopLeftRadius =  6 + "px";
         self.container.style.borderTopRightRadius =  6 + "px";
+        self.container.style.overflow = "hidden";
 
         // Adds margins
         self.actionBar.style.borderBottomColor = "rgb(229,229,229)";
@@ -178,11 +180,93 @@ alert = function () {
 
     }
 
+    /************************************************************
+     * Less interesting functions, used to style the dialog box *
+     ************************************************************/
+
+    /**
+     * Shows the ModalDialogBox
+     */
+    function showDialog(yourTriggeredFunction) {
+        self.overlay.style.display = "block";
+        yourTriggeredFunction();
+    }
+
     /**
      * Dismisses the ModalDialogBox
      */
-    function dismissDialog() {
+    function dismissDialog(yourCallBackFunction) {
+        self.overlay.style.display = "none";
+        yourCallBackFunction();
     }
+
+    /**
+     * Sets the Overlay backrgound color
+     */
+    function setOverlayBackgroundColor(color) {
+        self.overlay.style.backgroundColor = color;
+    }
+
+    /**
+     * Sets the ActionBar background color
+     * @param color
+     */
+    function setActionBarBackgroundColor(color) {
+        self.actionBar.style.backgroundColor = color;
+    }
+
+    /**
+     * Sets the Content background color
+     * @param color
+     */
+    function setContentBackgroundColor(color) {
+        self.content.style.backgroundColor = color;
+    }
+
+    /**
+     * Sets the Footer background color
+     * @param color
+     */
+    function setFooterBackgroundColor(color) {
+        self.footer.style.backgroundColor = color
+    }
+
+    /**
+     * Sets the ActionBar text color
+     * @param color
+     */
+    function setActionBarColor(color) {
+        self.actionBar.style.color = color
+    }
+
+    /**
+     * Sets the Content text color
+     * @param color
+     */
+    function setContentColor(color) {
+        self.content.style.color = color;
+    }
+
+    /**
+     * Sets the Footer text color
+     * @param color
+     */
+    function setFooterColor(color) {
+        self.footer.style.color = color;
+    }
+
+    /**
+     * Sets the ActionBar text
+     * @param text
+     */
+    function setActionBarText(text) {
+        self.footer.innerHTML = text;
+    }
+
+    function setContentText(text) {
+        self.content.innerHTML = text
+    }
+
 
 
 
@@ -191,9 +275,9 @@ alert = function () {
      *****************/
     setDefaultSize();
     prettify();
-    addButton("positiveBtn","OK",dismissDialog());
-    addButton("negativeBtn","Cancel",dismissDialog());
-
+    addButton("positiveBtn","OK",dismissDialog);
+    addButton("negativeBtn","Cancel",dismissDialog);
+    setFooterText("Hello !");
 
 };
 
