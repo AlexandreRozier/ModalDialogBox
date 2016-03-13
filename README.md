@@ -18,4 +18,14 @@ The main features are :
 3. Adding special actions to the buttons clicks
 4. Adding callback functions triggered when the dialog is dismissed
 
+Customizing the ModalDialog is really simple, all you have to do is chain the modification methods, as follows :
+
+```javascript
+    alert().setActionBarText("My custom title")
+            .setContentText("Very interesting content")
+            .addButton("My Button", "Click me !", myCallBackFunction)
+            .setContentColor("#949A9C")
+```
+
+
 I hope this will give you a hand ! It is under the MIT license, so feel free to use it.
