@@ -1,7 +1,13 @@
+/*
+ * Author : Alexandre Rozier
+ */
 
-// The modalPopupWindow function
-alert = function () {
 
+/**
+ * This function overrides the default Window.alert() function and allows the user to customize
+ * easily the appearance of the window.
+ */
+function alert () {
     /********************
      Variables definition
      ********************/
@@ -38,23 +44,23 @@ alert = function () {
     this.footer = document.getElementById('window-footer');
 
 
-    /******************
+    /********************
      Functions definition
-     ******************/
+     ********************/
 
 
     /**
      * Centers and sets the window to its default size
-     * @returns {setDefaultSize}
+     * @returns {alert}
      */
-    function setDefaultSize() {
+    this.setDefaultSize = function () {
 
         // Sets the overlay
         self.overlay.style.position = "absolute";
-        self.overlay.style.left = 0+'px';
-        self.overlay.style.right = 0+'px';
-        self.overlay.style.bottom = 0+'px';
-        self.overlay.style.top = 0+'px';
+        self.overlay.style.left = 0 + 'px';
+        self.overlay.style.right = 0 + 'px';
+        self.overlay.style.bottom = 0 + 'px';
+        self.overlay.style.top = 0 + 'px';
         self.overlay.style.backgroundColor = "rgba(210,210,210,0.8)";
 
         //Sets the padding and line heights
@@ -71,20 +77,18 @@ alert = function () {
         self.container.style.width = window.innerWidth / 3 + "px";
         self.container.style.zIndex = 1000;
         self.container.style.margin = "auto";
-        self.container.style.marginTop = window.innerHeight/2- (self.container.offsetHeight)/2+"px";
+        self.container.style.marginTop = window.innerHeight / 2 - (self.container.offsetHeight) / 2 + "px";
+        return self;
 
-    }
+    };
 
     /**
      * Adds a button to the footer, can be called several times
      * @param buttonId
      * @param text
      * @param triggeredFunction
-     * @returns {Element}
      */
-    function addButton(buttonId,text,triggeredFunction) {
-
-
+    this.addButton = function (buttonId, text, triggeredFunction) {
         // Sets the defaultColor for the button
         var defaultColor = "rgb(255,255,255)";
         var defaultHoveredColor = "rgb(225,225,225)";
@@ -92,9 +96,7 @@ alert = function () {
         // Creates the button with the given text and listener
         var btn = document.createElement("A");
         var t = document.createTextNode(text);
-        btn.addEventListener('click', function(){
-            dismissDialog();
-        });
+        btn.addEventListener('click', triggeredFunction);
         btn.appendChild(t);
 
         // Adds the id
@@ -110,16 +112,16 @@ alert = function () {
         btn.style.backgroundColor = defaultColor;
 
         // Rounds the corners
-        btn.style.borderTopLeftRadius = 4+"px";
-        btn.style.borderTopRightRadius = 4+"px";
-        btn.style.borderBottomRightRadius = 4+"px";
-        btn.style.borderBottomLeftRadius = 4+"px";
+        btn.style.borderTopLeftRadius = 4 + "px";
+        btn.style.borderTopRightRadius = 4 + "px";
+        btn.style.borderBottomRightRadius = 4 + "px";
+        btn.style.borderBottomLeftRadius = 4 + "px";
 
         // Adds nice hover effect
-        btn.onmouseover = function() {
+        btn.onmouseover = function () {
             btn.style.backgroundColor = defaultHoveredColor
         };
-        btn.onmouseout = function() {
+        btn.onmouseout = function () {
             btn.style.backgroundColor = defaultColor
         };
 
@@ -128,28 +130,30 @@ alert = function () {
 
         // Finally adds the button to the html page
         self.footer.appendChild(btn);
+        return self;
 
-    }
+    };
 
     /**
      * Removes a button given its ID
      * @param buttonId
      */
-    function removeButton(buttonId) {
+    this.removeButton = function (buttonId) {
         var self = document.getElementById(buttonId);
         self.parentNode.removeChild(self);
-        return document.getElementById('window-overlay');
-    }
+        return self;
+
+    };
     /**
      * Adds some CSS effects
      */
-    function prettify() {
+    this.prettify = function () {
 
         // Rounds the corners
-        self.container.style.borderBottomLeftRadius =  6 + "px";
-        self.container.style.borderBottomRightRadius =  6 + "px";
-        self.container.style.borderTopLeftRadius =  6 + "px";
-        self.container.style.borderTopRightRadius =  6 + "px";
+        self.container.style.borderBottomLeftRadius = 6 + "px";
+        self.container.style.borderBottomRightRadius = 6 + "px";
+        self.container.style.borderTopLeftRadius = 6 + "px";
+        self.container.style.borderTopRightRadius = 6 + "px";
         self.container.style.overflow = "hidden";
 
         // Adds margins
@@ -175,10 +179,21 @@ alert = function () {
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(wf, s);
 
-        self.container.style.fontFamily =  "Quicksand";
-        self.actionBar.style.fontFamily =  "Quicksand 700";
+        self.container.style.fontFamily = "Quicksand";
+        self.actionBar.style.fontFamily = "Quicksand 700";
+        return self;
+    };
 
-    }
+    this._init = function (actionBarText, contentText, overlayBackgroundColor, actionBarBackgroundColor, contentBarBackgroundColor, actionBarColor, contentColor) {
+        this.setActionBarText(actionBarText);
+        this.setContentText(contentText);
+        this.setOverlayBackgroundColor(overlayBackgroundColor);
+        this.setActionBarBackgroundColor(actionBarBackgroundColor);
+        this.setContentBackgroundColor(contentBarBackgroundColor);
+        this.setActionBarColor(actionBarColor);
+        this.setContentColor(contentColor);
+        return self;
+    };
 
     /************************************************************
      * Less interesting functions, used to style the dialog box *
@@ -187,99 +202,117 @@ alert = function () {
     /**
      * Shows the ModalDialogBox
      */
-    function showDialog(yourTriggeredFunction) {
+    this.showDialog = function (yourTriggeredFunction) {
         self.overlay.style.display = "block";
         yourTriggeredFunction();
-    }
+        return self;
+    };
 
     /**
      * Dismisses the ModalDialogBox
      */
-    function dismissDialog(yourCallBackFunction) {
+    this.dismissDialog = function (yourCallBackFunction) {
         self.overlay.style.display = "none";
         yourCallBackFunction();
-    }
+        return self;
+
+    };
 
     /**
      * Sets the Overlay backrgound color
      */
-    function setOverlayBackgroundColor(color) {
+    this.setOverlayBackgroundColor = function (color) {
         self.overlay.style.backgroundColor = color;
-    }
+        return self;
+
+    };
 
     /**
      * Sets the ActionBar background color
      * @param color
      */
-    function setActionBarBackgroundColor(color) {
+    this.setActionBarBackgroundColor = function (color) {
         self.actionBar.style.backgroundColor = color;
-    }
+        return self;
+    };
 
     /**
      * Sets the Content background color
      * @param color
      */
-    function setContentBackgroundColor(color) {
+    this.setContentBackgroundColor = function (color) {
         self.content.style.backgroundColor = color;
-    }
+        return self;
+
+    };
 
     /**
      * Sets the Footer background color
      * @param color
      */
-    function setFooterBackgroundColor(color) {
+    this.setFooterBackgroundColor = function (color) {
         self.footer.style.backgroundColor = color
-    }
+        return self;
+    };
 
     /**
      * Sets the ActionBar text color
      * @param color
      */
-    function setActionBarColor(color) {
+    this.setActionBarColor = function (color) {
         self.actionBar.style.color = color
-    }
+        return self;
+
+    };
 
     /**
      * Sets the Content text color
      * @param color
      */
-    function setContentColor(color) {
+    this.setContentColor = function (color) {
         self.content.style.color = color;
-    }
+        return self;
+
+    };
 
     /**
      * Sets the Footer text color
      * @param color
      */
-    function setFooterColor(color) {
+    this.setFooterColor = function (color) {
         self.footer.style.color = color;
-    }
+        return self;
+
+    };
 
     /**
      * Sets the ActionBar text
      * @param text
      */
-    function setActionBarText(text) {
-        self.footer.innerHTML = text;
-    }
+    this.setActionBarText = function (text) {
+        self.actionBar.innerHTML = text;
+        return self;
 
-    function setContentText(text) {
-        self.content.innerHTML = text
-    }
+    };
 
+    this.setContentText = function (text) {
+        self.content.innerHTML = text;
+        return self;
 
+    };
 
 
     /*****************
      The script itself
      *****************/
-    setDefaultSize();
-    prettify();
-    addButton("positiveBtn","OK",dismissDialog);
-    addButton("negativeBtn","Cancel",dismissDialog);
-    setFooterText("Hello !");
+    this.setDefaultSize()
+        .prettify()
+        .addButton("positiveBtn","OK",dismissDialog)
+        .addButton("negativeBtn","Cancel",dismissDialog);
 
-};
+    return self;
+}
+
 
 
 
