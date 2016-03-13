@@ -5,7 +5,10 @@ This library provides a modal dialog box, overriding the well-known Window.alert
 To begin with, you just have to include this lib via a `<script>` tag :
 
 ```javascript
-        alert();
+<script src="ModalPopupWindow.js" type="text/javascript"></script>
+<script type="text/javascript">
+    alert();
+</script>
 ```
 
 The main features are :
